@@ -3,17 +3,16 @@ package directory
 import "google.golang.org/api/admin/directory/v1"
 
 type Group struct {
-	Id          string   `json:"id,omitempty"`
-	Name        string   `json:"name,omitempty"`
-	Description string   `json:"description,omitempty"`
-	Email       string   `json:"email,omitempty"`
-	ETag        string   `json:"etag,omitempty"`
-	Aliases     []string `json:"aliases,omitempty"`
-
-	Members map[string]*Member `json:"members,omitempty"`
+	Id          string             `json:"id,omitempty"`
+	Name        string             `json:"name,omitempty"`
+	Description string             `json:"description,omitempty"`
+	Email       string             `json:"email,omitempty"`
+	ETag        string             `json:"etag,omitempty"`
+	Aliases     []string           `json:"aliases,omitempty"`
+	Members     map[string]*Member `json:"members,omitempty"`
 }
 
-func (c *Client) retrieveGroups() (map[string]*Group, error) {
+func (c *Service) retrieveGroups() (map[string]*Group, error) {
 	completeGroups := map[string]*Group{}
 	nextPageToken := ""
 
@@ -47,7 +46,7 @@ func toGroup(group *admin.Group) *Group {
 	}
 }
 
-func (c *Client) groupCall(pageToken string) (*admin.Groups, string, error) {
+func (c *Service) groupCall(pageToken string) (*admin.Groups, string, error) {
 	listCall := c.directoryService.Groups.List().Customer(c.customerId).MaxResults(10000)
 	if pageToken != "" {
 		listCall = listCall.PageToken(pageToken);

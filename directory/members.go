@@ -11,7 +11,7 @@ type Member struct {
 	Type   string `json:"type,omitempty"`
 }
 
-func (c *Client) retrieveMembers(groupId string) (map[string]*Member, error) {
+func (c *Service) retrieveMembers(groupId string) (map[string]*Member, error) {
 	completeMembers := map[string]*Member{}
 	nextPageToken := ""
 
@@ -46,7 +46,7 @@ func toMember(member *admin.Member) *Member {
 	}
 }
 
-func (c *Client) memberCall(groupId string, pageToken string) (*admin.Members, string, error) {
+func (c *Service) memberCall(groupId string, pageToken string) (*admin.Members, string, error) {
 	listCall := c.directoryService.Members.List(groupId).MaxResults(10000)
 	if pageToken != "" {
 		listCall = listCall.PageToken(pageToken);
