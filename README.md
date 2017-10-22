@@ -1,0 +1,1 @@
+This is a small helper library that helps retrieving the entire directory of groups and their members from gsuites.
